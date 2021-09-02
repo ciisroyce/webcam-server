@@ -23,8 +23,8 @@ app.get('/get-token', (req, res) => {
   res.redirect('/v1/api/token')
 });
 
-app.get('/v1/api/token', (req, res) => {
-  res.status(200).send('<h2>Temporary Page</h2>We were redirected here via a <i>Location</i> header.<br>Accessing this URL should have caused a return to our native application using universal links.').end();
+app.get('/v1/api/token/simulate_success', (req, res) => {
+  res.status(200).send('<h2>Oops!</h2>We were redirected here via a <i>Location</i> header.<br>This URL should have been captured by our native application using universal links.').end();
 });
 
 // Start the server
