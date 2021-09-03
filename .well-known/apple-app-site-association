@@ -3,8 +3,9 @@
         "apps": [],
         "details": [
             {
-                "appID": "com.electron.webcam-electron",
-                "paths": [ "/eos-webcam-dev.wl.r.appspot.com/vi/api/token/*"
+                "appID": "NC5A977249.com.electron.webcam",
+                "paths": [
+                     "/v1/api/token/*"
                 ]
             }
         ]

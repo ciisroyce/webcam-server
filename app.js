@@ -20,7 +20,7 @@ app.get('/get-token', (req, res) => {
   // TODO: We would go through the login process with the Canon subscription server here
 
   // The following redirect will redirect back to our Mac application using universal links
-  res.redirect('/v1/api/token')
+  res.redirect('/v1/api/token/simulate_success')
 });
 
 app.get('/v1/api/token/simulate_success', (req, res) => {
