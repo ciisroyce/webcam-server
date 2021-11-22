@@ -19,12 +19,13 @@ app.get('/.well-known/apple-app-site-association', (req, res) => {
 app.get('/get-token', (req, res) => {
   // TODO: We would go through the login process with the Canon subscription server here
 
-  // The following redirect will redirect back to our Mac application using universal links
+  // The following redirect will redirect back to our Mac application when we switch to universal links
   res.redirect('/v1/api/token')
 });
 
+// This link is planned for universal links
 app.get('/v1/api/token', (req, res) => {
-  res.status(200).send('<h2>Temporary Page</h2>We were redirected here via a <i>Location</i> header.<br>Accessing this URL should have caused a return to our native application using universal links.').end();
+  res.status(200).send('<h2>Temporary Page</h2>We were redirected here via a <i>Location</i> header.<br>Accessing this URL will eventually cause a return to our native application using universal links.').end();
 });
 
 // Start the server
