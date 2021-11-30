@@ -33,7 +33,7 @@ app.get('/webcam/authtoken', (req, res) => {
 });
 
 app.get('/v1/api/token/simulate_success', (req, res) => {
-  res.status(200).send('<h2>Success!</h2>We were redirected here via a <i>Location</i> header.<br>This URL will eventually be captured by our native application using universal links.').end();
+  res.status(200).sendFile('simulate_success.html', { root: '.' });
 });
 
 // Start the server

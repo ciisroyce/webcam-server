@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>simulate_success</title>
+    <style>
+        body {
+            padding-top: 0px;
+        }
+    </style>
+    <script>
+        function getIdToken() {
+            console.log("Executing getIdToken()");
+            document.getElementById('fragmentTitle').innerHTML = 'URL Fragment';
+            document.getElementById('tokenHeaderTitle').innerHTML = "Decoded Identity Token";
+            document.getElementById('jwtHeaderTitle').innerHTML = '<b>JWT Header</b>';
+            document.getElementById('jwtBodyTitle').innerHTML = '<b>JWT Body</b>';
+
+            let urlFragment = window.location.hash.substr(1);
+            document.getElementById('fragment').innerHTML = urlFragment;
+            let encodedToken = urlFragment.substr(9);
+            
+            let dotIndex1 = encodedToken.indexOf('.');
+            let encodedFirstPart = encodedToken.substring(0, dotIndex1);
+            //console.log ('dotIndex1 = ' + dotIndex1);
+            //console.log ('encodedFirstPart = ' + encodedFirstPart);
+            
+            let decodedFirstPart = atob(encodedFirstPart);
+            //console.log ('decodedFirstPart token = ' + decodedFirstPart);
+            document.getElementById('decodedFirstPart').innerHTML = JSON.stringify(JSON.parse(decodedFirstPart), null, 2);
+
+            let dotIndex2 = encodedToken.indexOf('.', dotIndex1 + 1);
+            let encodedSecondPart = encodedToken.substring(dotIndex1 +1, dotIndex2);
+            //console.log ('dotIndex2 = ' + dotIndex2);
+            //console.log ('encodedSecondPart = ' + encodedSecondPart);
+            
+            let decodedSecondPart = atob(encodedSecondPart);
+            //console.log ('decodedSecondPart token = ' + decodedSecondPart);
+            let body = JSON.parse(decodedSecondPart);
+            document.getElementById('decodedSecondPart').innerHTML = JSON.stringify(body, null, 2);
+
+            let iat = body.iat;
+            let issDate = new Date(iat * 1000);
+            let issYear = issDate.getUTCFullYear();
+            let issMonth = issDate.getUTCMonth() + 1;
+            let issDay = issDate.getUTCDate();
+            let issHours = issDate.getUTCHours();
+            let issMinutes = "0" + issDate.getUTCMinutes();
+            let issSeconds = "0" + issDate.getUTCSeconds();
+
+            let formattedIssuedTime = issMonth + '/' + issDay + '/' + issYear + ' ' + issHours + ':' + issMinutes.substr(-2) + ':' + issSeconds.substr(-2);
+            document.getElementById('issued').innerHTML = 'This identity token was issued at: ' + formattedIssuedTime + " UTC";
+
+            let exp = body.exp;
+            let expDate = new Date(exp * 1000);
+            let expYear = expDate.getUTCFullYear();
+            let expMonth = expDate.getUTCMonth() + 1;
+            let expDay = expDate.getUTCDate();
+            let expHours = expDate.getUTCHours();
+            let expMinutes = "0" + expDate.getUTCMinutes();
+            let expSeconds = "0" + expDate.getUTCSeconds();
+
+            let formattedExpTime = expMonth + '/' + expDay + '/' + expYear + ' ' + expHours + ':' + expMinutes.substr(-2) + ':' + expSeconds.substr(-2);
+            document.getElementById('expires').innerHTML = 'This identity token will expire at: ' + formattedExpTime + " UTC";
+            
+            // Make the Send Token button visible
+            document.getElementById('sendButton').style = "display: visible";
+        }
+
+        function sendTokenToServer() {
+            // TODO: We should send the encoded token, so the server can validate the signature on the JWT
+            document.getElementById('sendTokenResponse').innerHTML = 'This function has not yet been implemented.';
+        }
+    </script>
+</head>
+<body>
+    <h2>Success!</h2>
+    You are logged in to Canon Global ID. <br><br>
+    We were redirected here via a <i>Location</i> header.<br>
+    This URL will eventually be captured by our native application using universal links.<br><br>
+    Click the button to decode the ID token from the URL fragment:<br><br>
+    <button type="button" id="decodeButton" onclick="getIdToken()">Decode Token</button><br>
+    <h2 id=fragmentTitle></h2>
+    <p id='fragment' word-wrap: break-word style="font-family: monospace;">
+    </p>
+
+    <h2 id='tokenHeaderTitle'></h2>
+
+    <h id=jwtHeaderTitle></h>
+    <pre id='decodedFirstPart'>
+    </pre>
+
+    <h id=jwtBodyTitle></h>
+    <pre id='decodedSecondPart'>
+    </pre>
+
+    <div id='issued'>
+    </div>
+
+    <div id='expires'>
+    </div>
+    <br>
+    <button type="button" id="sendButton" style="display: none" onclick="sendTokenToServer()">Send Token to Server</button><br>
+    <p id='sendTokenResponse' style="color:red;">
+    </p>
+
+</body>
+</html>
+
+
