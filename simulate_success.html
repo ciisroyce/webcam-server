@@ -76,7 +76,7 @@
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == XMLHttpRequest.DONE) {
                     document.getElementById('sendTokenResponse').innerHTML = document.getElementById('sendTokenResponse').innerHTML 
-                    + '<br>Response received:<br>'
+                    + '<br>Received response:<br><br>'
                     + xhr.response;
                 }
             }
@@ -109,8 +109,9 @@
     <div id='issued'></div>
     <div id='expires'></div>
     <br>
+
     <button type="button" id="sendButton" style="display: none" onclick="sendTokenToServer()">Send Token to Server</button><br>
-    <p id='sendTokenResponse' style="color:black;"></p>
+    <p id='sendTokenResponse' word-wrap: break-word style="font-family: monospace;"></p>
 
 </body>
 </html>
