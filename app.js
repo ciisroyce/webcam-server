@@ -6,6 +6,8 @@ const path = require('path');
 
 const app = express();
 
+app.use(express.json());
+
 app.get('/', (req, res) => {
   res.status(200).sendFile(path.join(__dirname, '/index.html'));
 });
@@ -16,7 +18,7 @@ app.get('/.well-known/apple-app-site-association', (req, res) => {
   res.redirect('/v1/api/token')
 });
 
-app.get('/get-token', (req, res) => {
+app.get('/v1/api/token/login', (req, res) => {
   // We will go through the login process with the Canon subscription server here, which will
   // redirect back to our Mac application using universal links, after successful authentication.
   res.redirect('https://ccb-dev.com/canonid/#/login?client_id=a560247f-c16c-43cb-8ce1-aa466395df7d&redirect_uri=https:%2F%2Feos-webcam-dev.wl.r.appspot.com%2Fwebcam%2Fauthtoken&rd=1&scope=openid&response_type=id_token&nonce=some_value')
@@ -34,6 +36,16 @@ app.get('/webcam/authtoken', (req, res) => {
 
 app.get('/v1/api/token/simulate_success', (req, res) => {
   res.status(200).sendFile('simulate_success.html', { root: '.' });
+});
+
+app.post('/v1/api/token/get_jwt', (req, res) => {
+  // Receive a user token following a successful login.
+  // TODO: Associate this token with a user's account status and create a token of our own to return to the native app.
+  // TODO: For now, just send the existing JWT.
+
+    let myResponse = req.body;
+    console.log('req.body = ' + req.body);
+    res.status(200).send(myResponse);
 });
 
 // Start the server
